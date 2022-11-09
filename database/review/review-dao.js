@@ -5,7 +5,8 @@ const findAllReviews = () => {
 }
 
 const findReviewsBycocktail = (cocktailId) => {
-    return reviewModel.find({cocktailId: cocktailId}).populate("users").exec();
+    // return reviewModel.find({cocktailId: cocktailId}).populate("users").exec();
+    return reviewModel.find({cocktailId: cocktailId}).exec();
 }
 
 const createReviewForcocktail = (cocktailId, textArea, username, cocktailName, cocktailImg, userId) => {
