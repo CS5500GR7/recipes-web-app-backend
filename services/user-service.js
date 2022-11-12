@@ -1,3 +1,4 @@
+const userService = require("../database/user/user-dao");
 module.exports = (app) => {
     const userService = require("../database/user/user-dao");
 
@@ -7,9 +8,13 @@ module.exports = (app) => {
         userService.findUserByUsername(credentials.username)
             .then((actualUser) => {
                 if(actualUser.length > 0) {
-                    // 当已经存在该用户的时候，发送"0"
+                    // send 0 if username already exists
                     res.send("0");
-                } else {
+                } else if (
+                    !userService.validateEmail(credentials.email)) {
+                        res.send("1");
+                }
+                else {
                     userService.register(credentials)
                         .then((newUser) => {
                             req.session['profile'] = newUser;
@@ -17,6 +22,7 @@ module.exports = (app) => {
                         });
                 }
             });
+
     }
 
     const login = (req, res) => {
