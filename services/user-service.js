@@ -10,11 +10,13 @@ module.exports = (app) => {
                 if(actualUser.length > 0) {
                     // send 0 if username already exists
                     res.send("0");
-                } else if (
-                    !userService.validateEmail(credentials.email)) {
-                        res.send("1");
-                }
-                else {
+                } else if (!userService.validateEmail(credentials.email)) {
+                    res.send("1");
+                } else if (isNaN(credentials.age)) {
+                    res.send("2");
+                } else if (Number(credentials.age) < 21) {
+                    res.send("3");
+                } else {
                     userService.register(credentials)
                         .then((newUser) => {
                             req.session['profile'] = newUser;
