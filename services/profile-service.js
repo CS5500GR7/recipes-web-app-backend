@@ -20,8 +20,9 @@ module.exports = (app) => {
     }
 
     const findUserByUsername = (req, res) => {
-        const targetUser = req.params['username'];
-        userService.findUserByUsername(targetUser)
+        const targetUserName = req.params['username'];
+        const targetUserEmail = req.params['email'];
+        userService.findUserByUsername(targetUserName, targetUserEmail)
             .then((user) => {
                 res.send(user);
             })

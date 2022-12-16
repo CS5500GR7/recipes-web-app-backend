@@ -15,8 +15,9 @@ const findUserByCredentials = (username, password) => {
     return userModel.findOne({username, password});
 }
 
-const findUserByUsername = (username) => {
-    return userModel.find({username: username});
+const findUserByUsername = (username, email) => {
+    return userModel.findOne({'$or': [{'username': username}, {'email': email}]});
+
 }
 
 const findUserById = (uid) => {

@@ -5,12 +5,15 @@ module.exports = (app) => {
     const register = (req, res) => {
         const credentials = req.body;
         console.log(credentials);
-        userService.findUserByUsername(credentials.username)
+        userService.findUserByUsername(credentials.username, credentials.email)
             .then((actualUser) => {
-                if(actualUser.length > 0) {
+                console.log("acutalUser is " + actualUser);
+                if (actualUser) {
                     // send 0 if username already exists
                     res.send("0");
-                } else if (!userService.validateEmail(credentials.email)) {
+
+                } else if (
+                    !userService.validateEmail(credentials.email)) {
                     res.send("1");
                 } else if (isNaN(credentials.age)) {
                     res.send("2");
@@ -24,7 +27,6 @@ module.exports = (app) => {
                         });
                 }
             });
-
     }
 
     const login = (req, res) => {
